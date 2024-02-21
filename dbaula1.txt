@@ -1,0 +1,451 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Password for user postgres:
+psql (14.2)
+WARNING: Console code page (850) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# create database banco
+postgres-# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-#
+postgres-#
+postgres-# create database bd_banco_jc
+postgres-# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# create table db_banco
+postgres-# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# create table bd_banco_jc
+postgres-# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# create table banco
+postgres-# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# select table db_banco
+postgres-# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# use template0
+postgres-# \c template0
+connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "template0" is not currently accepting connections
+Previous connection kept
+postgres-# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# create table banco
+postgres-# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# \c
+You are now connected to database "postgres" as user "postgres".
+postgres-# \c template1
+You are now connected to database "template1" as user "postgres".
+template1-# \c template0
+connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "template0" is not currently accepting connections
+Previous connection kept
+template1-# \c postgres
+You are now connected to database "postgres" as user "postgres".
+postgres-# create database banco;
+ERROR:  syntax error at or near "create"
+LINE 2: create database bd_banco_jc
+        ^
+postgres=# create database banco
+postgres-# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# create database bd_sistema_bancario;
+ERROR:  syntax error at or near "create"
+LINE 2: create database bd_sistema_bancario;
+        ^
+postgres=# create database bd_sistema_bancario;
+CREATE DATABASE
+postgres=# \l
+                                                  List of databases
+        Name         |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+---------------------+----------+----------+------------------------+------------------------+-----------------------
+ bd_sistema_bancario | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ postgres            | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0           | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+                     |          |          |                        |                        | postgres=CTc/postgres
+ template1           | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+                     |          |          |                        |                        | postgres=CTc/postgres
+(4 rows)
+
+
+postgres=# \c bd_sistema_bancario
+You are now connected to database "bd_sistema_bancario" as user "postgres".
+bd_sistema_bancario=# create table teste (nome varchar(20));
+CREATE TABLE
+bd_sistema_bancario=# insert into teste values ("arley ferreira");
+ERROR:  column "arley ferreira" does not exist
+LINE 1: insert into teste values ("arley ferreira");
+                                  ^
+bd_sistema_bancario=# /dt
+bd_sistema_bancario-# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario-# select * from teste
+bd_sistema_bancario-# insert into teste values ('arley ferreira');
+ERROR:  syntax error at or near "/"
+LINE 1: /dt
+        ^
+bd_sistema_bancario=# insert into teste values ('arley ferreira');
+INSERT 0 1
+bd_sistema_bancario=# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario=# select * from teste;
+      nome
+----------------
+ arley ferreira
+(1 row)
+
+
+bd_sistema_bancario=# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario=# insert into teste values ('ronaldinho gaucho');
+INSERT 0 1
+bd_sistema_bancario=# select * from teste;
+       nome
+-------------------
+ arley ferreira
+ ronaldinho gaucho
+(2 rows)
+
+
+bd_sistema_bancario=# alter table teste add column (idade int);
+ERROR:  syntax error at or near "("
+LINE 1: alter table teste add column (idade int);
+                                     ^
+bd_sistema_bancario=# alter table teste add column idade int;
+ALTER TABLE
+bd_sistema_bancario=# select * from teste;
+       nome        | idade
+-------------------+-------
+ arley ferreira    |
+ ronaldinho gaucho |
+(2 rows)
+
+
+bd_sistema_bancario=# insert into teste values ('ronaldo fenomeno', '39');
+INSERT 0 1
+bd_sistema_bancario=# select * from teste;
+       nome        | idade
+-------------------+-------
+ arley ferreira    |
+ ronaldinho gaucho |
+ ronaldo fenomeno  |    39
+(3 rows)
+
+
+bd_sistema_bancario=# update set idade = 45 from teste where nome = arley ferreira;
+ERROR:  syntax error at or near "="
+LINE 1: update set idade = 45 from teste where nome = arley ferreira...
+                         ^
+bd_sistema_bancario=# update set idade values = 45 from teste where nome = arley ferreira;
+ERROR:  syntax error at or near "values"
+LINE 1: update set idade values = 45 from teste where nome = arley f...
+                         ^
+bd_sistema_bancario=# update set values idade = 45 from teste where nome = arley ferreira;
+ERROR:  syntax error at or near "idade"
+LINE 1: update set values idade = 45 from teste where nome = arley f...
+                          ^
+bd_sistema_bancario=# update teste set idade = 45 where nome = arley ferreira;
+ERROR:  syntax error at or near "ferreira"
+LINE 1: update teste set idade = 45 where nome = arley ferreira;
+                                                       ^
+bd_sistema_bancario=# update teste set idade = 45 where nome = 'arley ferreira';
+UPDATE 1
+bd_sistema_bancario=# update teste set idade = 45 where nome = 'ronaldinho gaucho';
+UPDATE 1
+bd_sistema_bancario=#
+bd_sistema_bancario=# update teste set idade = '' where nome = 'ronaldinho gaucho';
+ERROR:  invalid input syntax for type integer: ""
+LINE 1: update teste set idade = '' where nome = 'ronaldinho gaucho'...
+                                 ^
+bd_sistema_bancario=# select * from teste;
+       nome        | idade
+-------------------+-------
+ ronaldo fenomeno  |    39
+ arley ferreira    |    45
+ ronaldinho gaucho |    45
+(3 rows)
+
+
+bd_sistema_bancario=# update teste set idade = 43 where nome = 'ronaldinho gaucho';
+UPDATE 1
+bd_sistema_bancario=# select * from teste;
+       nome        | idade
+-------------------+-------
+ ronaldo fenomeno  |    39
+ arley ferreira    |    45
+ ronaldinho gaucho |    43
+(3 rows)
+
+
+bd_sistema_bancario=# create table cliente (id integer)
+bd_sistema_bancario-# \l
+                                                  List of databases
+        Name         |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+---------------------+----------+----------+------------------------+------------------------+-----------------------
+ bd_sistema_bancario | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ postgres            | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0           | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+                     |          |          |                        |                        | postgres=CTc/postgres
+ template1           | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+                     |          |          |                        |                        | postgres=CTc/postgres
+(4 rows)
+
+
+bd_sistema_bancario-#
+bd_sistema_bancario-# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario-# create table cliente (id integer) ;
+ERROR:  syntax error at or near "create"
+LINE 2: create table cliente (id integer) ;
+        ^
+bd_sistema_bancario=# create table cliente (id integer) ;
+CREATE TABLE
+bd_sistema_bancario=# delete table cliente
+bd_sistema_bancario-# \dt
+          List of relations
+ Schema |  Name   | Type  |  Owner
+--------+---------+-------+----------
+ public | cliente | table | postgres
+ public | teste   | table | postgres
+(2 rows)
+
+
+bd_sistema_bancario-# delete table cliente;
+ERROR:  syntax error at or near "table"
+LINE 1: delete table cliente
+               ^
+bd_sistema_bancario=# delete table cliente;
+ERROR:  syntax error at or near "table"
+LINE 1: delete table cliente;
+               ^
+bd_sistema_bancario=# delete table cliente;
+ERROR:  syntax error at or near "table"
+LINE 1: delete table cliente;
+               ^
+bd_sistema_bancario=# drop table cliente;
+DROP TABLE
+bd_sistema_bancario=# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario=# create table cliente (cidade_cliente varchar(20), endereco_cliente varchar(20) ;
+bd_sistema_bancario(# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario(# create table cliente (cidade_cliente varchar(20), endereco_cliente varchar(20) ;
+bd_sistema_bancario(# create table cliente (cidade_cliente varchar(20), endereco_cliente varchar(20)) ;
+bd_sistema_bancario(# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario(# \l
+                                                  List of databases
+        Name         |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+---------------------+----------+----------+------------------------+------------------------+-----------------------
+ bd_sistema_bancario | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ postgres            | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0           | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+                     |          |          |                        |                        | postgres=CTc/postgres
+ template1           | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+                     |          |          |                        |                        | postgres=CTc/postgres
+(4 rows)
+
+
+bd_sistema_bancario(# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario(# create table cliente (nome_cliente varchar(20), cidade_cliente varchar(20), endereco_cliente varchar(20)) ;
+bd_sistema_bancario(# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario(# create table cliente (nome_cliente varchar(20), cidade_cliente varchar(20), endereco_cliente varchar(20)) ;
+bd_sistema_bancario(# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario(# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario(#  ;
+bd_sistema_bancario(# create table cliente (nome_cliente varchar(20), cidade_cliente varchar(20), endereco_cliente varchar(20));
+bd_sistema_bancario(# create table clientes (nome_cliente varchar(20), cidade_cliente varchar(20), endereco_cliente varchar(20));
+bd_sistema_bancario(# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario(# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ public | teste | table | postgres
+(1 row)
+
+
+bd_sistema_bancario(# create table cliente (nome_cliente varchar(20), cidade_cliente varchar(20), endereco_cliente varchar(20)) ;
