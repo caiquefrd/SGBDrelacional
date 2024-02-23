@@ -1,0 +1,47 @@
+postgres=# alter table cliente add column idade integer;
+ALTER TABLE
+postgres=# alter table cliente rename comumn idade to idades;
+ERRO:  erro de sintaxe em ou próximo a "idade"
+LINHA 1: alter table cliente rename comumn idade to idades;
+                                           ^
+postgres=# alter table cliente rename comumn idade to idades;
+ERRO:  erro de sintaxe em ou próximo a "idade"
+LINHA 1: alter table cliente rename comumn idade to idades;
+                                           ^
+postgres=# alter table cliente rename comumn 'idade' to idades;
+ERRO:  erro de sintaxe em ou próximo a "'idade'"
+LINHA 1: alter table cliente rename comumn 'idade' to idades;
+                                           ^
+postgres=# alter table cliente RENAME COLUMN idade TO idades;
+ALTER TABLE
+postgres=# select * from cliente;
+ nome_cliente | cidade_cliente | endereco_cliente | idades
+--------------+----------------+------------------+--------
+(0 registro)
+
+
+postgres=# ALTER TABLE cliente DROP COLUMN idades;
+ALTER TABLE
+postgres=# ALTER TABLE cliente rename to tbcliente;
+ALTER TABLE
+postgres=# select * from tbcliente;
+ nome_cliente | cidade_cliente | endereco_cliente
+--------------+----------------+------------------
+(0 registro)
+
+
+postgres=# ALTER TABLE tb_cliente ADD COLUMN idade integer;
+ERRO:  relação "tb_cliente" não existe
+postgres=# ALTER TABLE tbcliente rename to tb_cliente;
+ALTER TABLE
+postgres=# ALTER TABLE tb_cliente ADD COLUMN idade integer;
+ALTER TABLE
+postgres=# ALTER TABLE tb_cliente ADD COLUMN CPF integer;
+ALTER TABLE
+postgres=# ALTER TABLE conta rename to tbl_conta;
+ALTER TABLE
+postgres=# ALTER TABLE emprestimo rename to tbl_emprestimo;
+ALTER TABLE
+postgres=# ALTER TABLE agencia rename to tbl_agencia;
+ALTER TABLE
+postgres=#

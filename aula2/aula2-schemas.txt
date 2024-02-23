@@ -1,0 +1,37 @@
+postgres=# SET SEARCH_PATH = caique;
+SET
+postgres=# SHOW SEARCH_PATH;
+ search_path
+-------------
+ caique
+(1 registro)
+
+
+postgres=# \dn
+     Lista de esquemas
+  Nome  |       Dono
+--------+-------------------
+ caique | postgres
+ public | pg_database_owner
+(2 registros)
+
+
+postgres=# SET SEARCH_PATH = public;
+SET
+postgres=# \dn
+     Lista de esquemas
+  Nome  |       Dono
+--------+-------------------
+ caique | postgres
+ public | pg_database_owner
+(2 registros)
+
+
+postgres=# SHOW SEARCH_PATH;
+ search_path
+-------------
+ public
+(1 registro)
+
+
+postgres=#
