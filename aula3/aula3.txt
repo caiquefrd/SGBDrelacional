@@ -1,0 +1,70 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Password for user postgres:
+psql (14.2)
+WARNING: Console code page (850) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \l
+                                                  List of databases
+        Name         |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+---------------------+----------+----------+------------------------+------------------------+-----------------------
+ bd_sistema_bancario | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ bdaula03            | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ dbaula03            | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ postgres            | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0           | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+                     |          |          |                        |                        | postgres=CTc/postgres
+ template1           | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+                     |          |          |                        |                        | postgres=CTc/postgres
+(6 rows)
+
+
+postgres=# \c bdaula03;
+You are now connected to database "bdaula03" as user "postgres".
+bdaula03=# \l
+                                                  List of databases
+        Name         |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+---------------------+----------+----------+------------------------+------------------------+-----------------------
+ bd_sistema_bancario | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ bdaula03            | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ dbaula03            | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ postgres            | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0           | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+                     |          |          |                        |                        | postgres=CTc/postgres
+ template1           | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+                     |          |          |                        |                        | postgres=CTc/postgres
+(6 rows)
+
+
+bdaula03=# \dt
+Did not find any relations.
+bdaula03=# create table tbl_cliente (CONSTRAINT codigo_cliente PRIMARY KEY, nome varchar(20) NOT NULL, cidade varchar(40), endereco varchar (30));
+ERROR:  syntax error at or near ","
+LINE 1: ...tbl_cliente (CONSTRAINT codigo_cliente PRIMARY KEY, nome var...
+                                                             ^
+bdaula03=# create table tbl_cliente (codigo_cliente integer PRIMARY KEY, nome varchar(20) NOT NULL, cidade varchar(20), endereco varchar(30));
+CREATE TABLE
+bdaula03=# create table tbl_titulo ( titulo varchar(20) NOT NULL, descricao varchar(20), categoria varchar(20));
+CREATE TABLE
+bdaula03=# create table tbl_emprestimo ( numero_emprestimo integer PRIMARY KEY, codigo_cliente varchar(20), codigo_livro varchar(20));
+CREATE TABLE
+bdaula03=# create table tbl_livros ( cod_livro integer PRIMARY KEY, codigo_titulo varchar(20), status varchar(5));
+CREATE TABLE
+bdaula03=# select * from tbl_livros;
+ cod_livro | codigo_titulo | status
+-----------+---------------+--------
+(0 rows)
+
+
+bdaula03=# select * from tbl_emprestimo;
+ numero_emprestimo | codigo_cliente | codigo_livro
+-------------------+----------------+--------------
+(0 rows)
+
+
+bdaula03=#
