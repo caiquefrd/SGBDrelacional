@@ -1,0 +1,148 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Password for user postgres:
+psql (14.2)
+WARNING: Console code page (850) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \c bd_aula03;
+You are now connected to database "bd_aula03" as user "postgres".
+bd_aula03=# \dt
+             List of relations
+ Schema |      Name      | Type  |  Owner
+--------+----------------+-------+----------
+ public | tbl_cliente    | table | postgres
+ public | tbl_emprestimo | table | postgres
+ public | tbl_livros     | table | postgres
+ public | tbl_titulo     | table | postgres
+(4 rows)
+
+
+bd_aula03=# select * tbl_titulo;
+ERROR:  syntax error at or near "tbl_titulo"
+LINE 1: select * tbl_titulo;
+                 ^
+bd_aula03=# select * tbl_livros
+bd_aula03-# select * tbl_livros;
+ERROR:  syntax error at or near "tbl_livros"
+LINE 1: select * tbl_livros
+                 ^
+bd_aula03=# select * from tbl_livros;
+ cod_livro | codigo_titulo
+-----------+---------------
+(0 rows)
+
+
+bd_aula03=# ALTER TABLE add COLUMN status;
+ERROR:  syntax error at or near "COLUMN"
+LINE 1: ALTER TABLE add COLUMN status;
+                        ^
+bd_aula03=# ALTER TABLE ADD COLUMN status;
+ERROR:  syntax error at or near "COLUMN"
+LINE 1: ALTER TABLE ADD COLUMN status;
+                        ^
+bd_aula03=# ALTER TABLE tbl_livros add COLUMN status;
+ERROR:  syntax error at or near ";"
+LINE 1: ALTER TABLE tbl_livros add COLUMN status;
+                                                ^
+bd_aula03=# ALTER TABLE tbl_livros add COLUMN status;
+ERROR:  syntax error at or near ";"
+LINE 1: ALTER TABLE tbl_livros add COLUMN status;
+                                                ^
+bd_aula03=# ALTER TABLE tbl_livros ADD COLUMN status;
+ERROR:  syntax error at or near ";"
+LINE 1: ALTER TABLE tbl_livros ADD COLUMN status;
+                                                ^
+bd_aula03=# ALTER TABLE tbl_livros ADD COLUMN status;
+ERROR:  syntax error at or near ";"
+LINE 1: ALTER TABLE tbl_livros ADD COLUMN status;
+                                                ^
+bd_aula03=#
+bd_aula03=#
+bd_aula03=#
+bd_aula03=#
+bd_aula03=#
+bd_aula03=# \l
+                                             List of databases
+   Name    |  Owner   | Encoding |        Collate         |         Ctype          |   Access privileges
+-----------+----------+----------+------------------------+------------------------+-----------------------
+ bd_aula03 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ postgres  | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 |
+ template0 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+ template1 | postgres | UTF8     | Portuguese_Brazil.1252 | Portuguese_Brazil.1252 | =c/postgres          +
+           |          |          |                        |                        | postgres=CTc/postgres
+(4 rows)
+
+
+bd_aula03=# \dt
+             List of relations
+ Schema |      Name      | Type  |  Owner
+--------+----------------+-------+----------
+ public | tbl_cliente    | table | postgres
+ public | tbl_emprestimo | table | postgres
+ public | tbl_livros     | table | postgres
+ public | tbl_titulo     | table | postgres
+(4 rows)
+
+
+bd_aula03=# \dt
+             List of relations
+ Schema |      Name      | Type  |  Owner
+--------+----------------+-------+----------
+ public | tbl_cliente    | table | postgres
+ public | tbl_emprestimo | table | postgres
+ public | tbl_livros     | table | postgres
+ public | tbl_titulo     | table | postgres
+(4 rows)
+
+
+bd_aula03=# ALTER TABLE tbl_livros ADD COLUMN status;
+ERROR:  syntax error at or near ";"
+LINE 1: ALTER TABLE tbl_livros ADD COLUMN status;
+                                                ^
+bd_aula03=# ALTER TABLE tbl_livros ADD COLUMN status
+bd_aula03-# ALTER TABLE tbl_livros ADD COLUMN status
+bd_aula03-# ALTER TABLE tbl_livros ADD COLUMN status varchar(20);
+ERROR:  syntax error at or near "TABLE"
+LINE 2: ALTER TABLE tbl_livros ADD COLUMN status
+              ^
+bd_aula03=# select * from tbl_livros;
+ cod_livro | codigo_titulo
+-----------+---------------
+(0 rows)
+
+
+bd_aula03=# create domain chk_status text check ( value = 'DISPONIVEL', value = 'ALUGADO');
+ERROR:  syntax error at or near ","
+LINE 1: ...omain chk_status text check ( value = 'DISPONIVEL', value = ...
+                                                             ^
+bd_aula03=# create domain chk_status text check ( value = 'DISPONIVEL' and value = 'ALUGADO');
+ERROR:  type "chk_status" already exists
+bd_aula03=# ALTER TABLE tbl_livros ADD COLUMN status chk_status;
+ALTER TABLE
+bd_aula03=# select * from tbl_livros;
+ cod_livro | codigo_titulo | status
+-----------+---------------+--------
+(0 rows)
+
+
+bd_aula03=# ALTER TABLE tbl_livros DROP TABLE status;
+ERROR:  syntax error at or near "TABLE"
+LINE 1: ALTER TABLE tbl_livros DROP TABLE status;
+                                    ^
+bd_aula03=# ALTER TABLE tbl_livros DROP COLUMN status;
+ALTER TABLE
+bd_aula03=# ALTER TABLE tbl_livros DROP COLUMN status;
+ERROR:  column "status" of relation "tbl_livros" does not exist
+bd_aula03=# select * from tbl_livros;
+ cod_livro | codigo_titulo
+-----------+---------------
+(0 rows)
+
+
+bd_aula03=# ALTER TABLE tbl_livros ADD COLUMN status chk_status;
