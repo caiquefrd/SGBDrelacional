@@ -1,0 +1,48 @@
+bd_aula06=# SELECT t.titulo, l.status FROM tbl_titulo t LEFT JOIN tbl_livros l ON t.codigo_titulo = l.codigo_titulo;
+       titulo       |   status
+--------------------+------------
+ Aventuras Urbanas  | ALUGADO
+ Aventuras Urbanas  | ALUGADO
+ Mistérios Antigos  | DISPONIVEL
+ Amor nas Estrelas  | ALUGADO
+ Código Enigmatico  | ALUGADO
+ Histórias Perdidas |
+(6 registros)
+
+
+bd_aula06=# SELECT t.titulo, t.descricao FROM tbl_titulo t INNER JOIN tbl_livros l on t.codigo_titulo = l.codigo_titulo WHERE status = 'ALUGADO' ;
+      titulo       |         descricao
+-------------------+---------------------------
+ Aventuras Urbanas | Uma história emocionante
+ Aventuras Urbanas | Uma história emocionante
+ Amor nas Estrelas | Um romance intergaláctico
+ Código Enigmatico | Segredos ocultos
+(4 registros)
+
+
+bd_aula06=# SELECT c.nome, e.codigo_livro FROM tbl_cliente c LEFT JOIN tbl_emprestimo e ON c.codigo_cliente = e.codigo_cliente WHERE e.codigo_livro is NULL;
+    nome     | codigo_livro
+-------------+--------------
+ Carlos Lima |
+(1 registro)
+
+
+bd_aula06=# SELECT t.titulo, t.categoria, l.status FROM tbl_titulo t INNER JOIN tbl_livros l ON t.codigo_titulo = l.codigo_titulo WHERE l.status = 'DISPONIVEL';
+      titulo       | categoria |   status
+-------------------+-----------+------------
+ Mistérios Antigos | COMEDIA   | DISPONIVEL
+(1 registro)
+
+
+bd_aula06=# SELECT c.nome, t.titulo, l.status FROM tbl_cliente c FULL JOIN tbl_emprestimo e ON c.codigo_cliente = e.codigo_cliente LEFT JOIN tbl_livros l ON l.cod_livro = e.codigo_livro LEFT JOIN tbl_titulo t ON t.codigo_titulo = l.codigo_titulo;
+     nome      |      titulo       | status
+---------------+-------------------+---------
+ Joao Silva    | Aventuras Urbanas | ALUGADO
+ Maria Santos  | Amor nas Estrelas | ALUGADO
+ Pedro Almeida | Aventuras Urbanas | ALUGADO
+ Ana Oliveira  | Código Enigmatico | ALUGADO
+ Carlos Lima   |                   |
+(5 registros)
+
+
+bd_aula06=# select c.nome, t.titulo, l.status FROM tbl_cliente c INNER JOIN tbl_emprestimo e ON c.codigo_cliente = e.codigo_cliente INNER JOIN tbl_livros l ON l.cod_livro = e.codigo_livro INNER JOIN tbl_titulo t ON t.codigo_titulo = l.codigo_titulo WHERE c.nome = 'Ana Oliveira' ;
