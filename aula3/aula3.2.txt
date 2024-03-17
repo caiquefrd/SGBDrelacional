@@ -1,0 +1,61 @@
+postgres=# create database bd_aula03 ;
+CREATE DATABASE
+postgres=# \c bd_aula03
+Você está conectado agora ao banco de dados "bd_aula03" como usuário "postgres".
+bd_aula03=# create table tbl_cliente (codigo_cliente integer PRIMARY KEY, nome varchar(20) NOT NULL, cidade varchar(20), endereco varchar(30));
+CREATE TABLE
+bd_aula03=# create table tbl_titulo ( titulo varchar(20) NOT NULL, descricao varchar(20), categoria varchar(20));
+CREATE TABLE
+bd_aula03=# create table tbl_emprestimo ( numero_emprestimo integer PRIMARY KEY, codigo_cliente varchar(20), codigo_livro varchar(20));
+CREATE TABLE
+bd_aula03=# create table tbl_livros ( cod_livro integer PRIMARY KEY, codigo_titulo varchar(20), status varchar(5));
+CREATE TABLE
+bd_aula03=# /dt
+bd_aula03-# \dt
+              Lista de relaþ§es
+ Esquema |      Nome      |  Tipo  |   Dono
+---------+----------------+--------+----------
+ public  | tbl_cliente    | tabela | postgres
+ public  | tbl_emprestimo | tabela | postgres
+ public  | tbl_livros     | tabela | postgres
+ public  | tbl_titulo     | tabela | postgres
+(4 registros)
+
+
+bd_aula03-# select * from tbl_livros
+bd_aula03-# select * from tbl_livros ;
+ERRO:  erro de sintaxe em ou próximo a "/"
+LINHA 1: /dt
+         ^
+bd_aula03=# select * from tbl_livros ;
+ cod_livro | codigo_titulo | status
+-----------+---------------+--------
+(0 registro)
+
+
+bd_aula03=# select * from tbl_titulo
+bd_aula03-# select * from tbl_titulo ;
+ERRO:  erro de sintaxe em ou próximo a "select"
+LINHA 2: select * from tbl_titulo ;
+         ^
+bd_aula03=# select * from tbl_titulo ;
+ titulo | descricao | categoria
+--------+-----------+-----------
+(0 registro)
+
+
+bd_aula03=# FOREIGN KEY (codigo_filme) REFERENCES tbl_filme(codigo_filme) ;
+ERRO:  erro de sintaxe em ou próximo a "FOREIGN"
+LINHA 1: FOREIGN KEY (codigo_filme) REFERENCES tbl_filme(codigo_filme...
+         ^
+bd_aula03=# create domain chk_status text check ( value = 'DISPONIVEL', value = 'ALUGADO');
+ERRO:  erro de sintaxe em ou próximo a ","
+LINHA 1: ...omain chk_status text check ( value = 'DISPONIVEL', value = ...
+                                                              ^
+bd_aula03=# create domain chk_status text check ( value = 'DISPONIVEL' value = 'ALUGADO');
+ERRO:  erro de sintaxe em ou próximo a "value"
+LINHA 1: ...main chk_status text check ( value = 'DISPONIVEL' value = 'A...
+                                                              ^
+bd_aula03=# create domain chk_status text check ( value = 'DISPONIVEL' and value = 'ALUGADO');
+CREATE DOMAIN
+bd_aula03=#

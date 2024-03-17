@@ -1,0 +1,22 @@
+bd_aula03=# create table tbl_cliente (codigo_cliente integer PRIMARY KEY, nome varchar(20) NOT NULL, cidade varchar(20),
+ endereco varchar(30));
+CREATE TABLE
+bd_aula03=# create table tbl_titulo ( titulo varchar(20) NOT NULL, descricao varchar(20), categoria chk_categoria ) ;
+CREATE TABLE
+bd_aula03=# create table tbl_emprestimo ( numero_emprestimo integer PRIMARY KEY, codigo_cliente integer REFERENCES tbl_cliente (codigo_cliente) , codigo_livro integer);
+CREATE TABLE
+bd_aula03=# create table tbl_livros ( cod_livro integer PRIMARY KEY, codigo_titulo integer REFERENCES tbl_titulo(codigo_titulo), status chk_status DEFAULT 'DISPONIVEL');
+ERRO:  coluna "codigo_titulo" referenciada na restrição de chave estrangeira não existe
+bd_aula03=# ALTER TABLE tbl_titulo ADD COLUMN codigo_titulo integer PRIMARY KEY
+bd_aula03-# ALTER TABLE tbl_titulo ADD COLUMN codigo_titulo integer PRIMARY KEY ;
+ERRO:  erro de sintaxe em ou próximo a "ALTER"
+LINHA 2: ALTER TABLE tbl_titulo ADD COLUMN codigo_titulo integer PRIM...
+         ^
+bd_aula03=# ALTER TABLE tbl_titulo ADD COLUMN codigo_titulo integer PRIMARY KEY ;
+ALTER TABLE
+bd_aula03=# create table tbl_livros ( cod_livro integer PRIMARY KEY, codigo_titulo integer REFERENCES tbl_titulo(codigo_titulo), status chk_status DEFAULT 'DISPONIVEL');
+CREATE TABLE
+bd_aula03=# drop table tbl_emprestimo ;
+DROP TABLE
+bd_aula03=# create table tbl_emprestimo ( numero_emprestimo integer PRIMARY KEY, codigo_cliente integer REFERENCES tbl_cliente (codigo_cliente) , codigo_livro integer REFERENCES tbl_livros(cod_livro)) ;
+CREATE TABLE

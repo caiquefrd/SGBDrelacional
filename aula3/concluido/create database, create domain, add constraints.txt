@@ -1,0 +1,28 @@
+postgres=# CREATE DATABASE bd_aula03 ;
+CREATE DATABASE
+postgres=# \c bd_aula03 ;
+Você está conectado agora ao banco de dados "bd_aula03" como usuário "postgres".
+bd_aula03=# \dt
+Did not find any relations.
+bd_aula03=# create table tbl_cliente (codigo_cliente integer PRIMARY KEY, nome varchar(20) NOT NULL, cidade varchar(20), endereco varchar(30));
+CREATE TABLE
+bd_aula03=# create table tbl_titulo ( titulo varchar(20) NOT NULL, descricao varchar(20), categoria varchar(20));
+CREATE TABLE
+bd_aula03=# create table tbl_emprestimo ( numero_emprestimo integer PRIMARY KEY, codigo_cliente varchar(20), codigo_livro varchar(20));
+CREATE TABLE
+bd_aula03=# create table tbl_livros ( cod_livro integer PRIMARY KEY, codigo_titulo varchar(20), status varchar(5));
+CREATE TABLE
+bd_aula03=# ALTER TABLE tbl_titulo ADD COLUMN codigo_titulo integer PRIMARY KEY ;
+ALTER TABLE
+bd_aula03=# ALTER TABLE tbl_titulo ADD COLUMN codigo_titulo integer PRIMARY KEY ;
+ERRO:  coluna "codigo_titulo" da relação "tbl_titulo" já existe
+bd_aula03=# create domain chk_status text check ( value = 'DISPONIVEL' and value = 'ALUGADO');
+CREATE DOMAIN
+bd_aula03=# create domain chk_categoria text check ( value = 'DRAMA' and value = 'COMEDIA');
+CREATE DOMAIN
+bd_aula03=# ALTER TABLE tbl_livro ALTER COLUMN status type chk_status ;
+ERRO:  relação "tbl_livro" não existe
+bd_aula03=# ALTER TABLE tbl_livros ALTER COLUMN status type chk_status ;
+ALTER TABLE
+bd_aula03=# ALTER TABLE tbl_titulo ALTER COLUMN categoria type chk_status ;
+ALTER TABLE
