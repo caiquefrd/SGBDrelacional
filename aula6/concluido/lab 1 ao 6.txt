@@ -46,3 +46,7 @@ bd_aula06=# SELECT c.nome, t.titulo, l.status FROM tbl_cliente c FULL JOIN tbl_e
 
 
 bd_aula06=# select c.nome, t.titulo, l.status FROM tbl_cliente c INNER JOIN tbl_emprestimo e ON c.codigo_cliente = e.codigo_cliente INNER JOIN tbl_livros l ON l.cod_livro = e.codigo_livro INNER JOIN tbl_titulo t ON t.codigo_titulo = l.codigo_titulo WHERE c.nome = 'Ana Oliveira' ;
+     nome     |      titulo       | status
+--------------+-------------------+---------
+ Ana Oliveira | Código Enigmatico | ALUGADO
+(1 registro)

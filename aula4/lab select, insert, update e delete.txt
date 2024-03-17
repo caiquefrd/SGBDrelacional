@@ -1,0 +1,83 @@
+------------ LAB SELECT --------------
+
+bd_aula04=# select c.nome from tbl_cliente c ;
+     nome
+---------------
+ Joao Silva
+ Maria Santos
+ Pedro Almeida
+ Ana Oliveira
+ Carlos Lima
+(5 registros)
+
+bd_aula04=# select nome from tbl_cliente WHERE cidade = 'Sao Paulo' ;
+    nome
+------------
+ Joao Silva
+(1 registro)
+
+bd_aula04=# select c.nome from tbl_cliente c WHERE codigo_cliente > 3 ;
+     nome
+--------------
+ Ana Oliveira
+ Carlos Lima
+(2 registros)
+
+bd_aula04=# select t.titulo from tbl_titulo t;
+       titulo
+--------------------
+ Aventuras Urbanas
+ Mistérios Antigos
+ Amor nas Estrelas
+ Código Enigmatico
+ Histórias Perdidas
+(5 registros)
+
+
+------- LAB INSERT FROM SELECT -------
+
+INSERT INTO tbl_cliente2 ( codigo ) select codigo_cliente from t
+bl_cliente ;
+INSERT 0 5
+bd_aula04=# select * from tbl_cliente2 ;
+ codigo
+--------
+      1
+      2
+      3
+      4
+      5
+(5 registros)
+
+
+----- LAB UPDATE ------
+
+bd_aula04=# UPDATE tbl_livros SET status = 'DISPONIVEL' WHERE status = 'ALUG
+ADO' ;
+UPDATE 4
+
+bd_aula04=# select  l.status from tbl_livros l ;
+   status
+------------
+ DISPONIVEL
+ DISPONIVEL
+ DISPONIVEL
+ DISPONIVEL
+ DISPONIVEL
+(5 registros)
+
+
+---- LAB DELETE ----
+
+bd_aula04=# DELETE from tbl_cliente2 where codigo > 3 ;
+DELETE 2
+bd_aula04=# select * from tbl_cliente2 ;
+ codigo
+--------
+      1
+      2
+      3
+(3 registros)
+
+
+
