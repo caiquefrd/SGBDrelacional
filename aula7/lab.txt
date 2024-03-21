@@ -1,0 +1,95 @@
+--1 Listar o nome dos fornecedores(maiusculo) e das peças(minusculo) que se situam na mesma cidade, ordenado pelo nome
+
+SELECT UPPER(f.nome), LOWER(p.nome) FROM tbl_fornecedor f INNER
+JOIN tbl_peca p ON f.cidade = p.cidade ORDER BY f.nome,p.nome;
+
+
+--2 listar as cidades onde existem fornecedores (sem valores duplicados)
+
+SELECT DISTINCT f.cidade from tbl_fornecedor f ;
+ cidade
+---------
+ LONDRES
+ PARIS
+(2 registros)
+
+
+
+--3 Listar o nome e a cor das peças do fornecedor com código 3, ordenado pelo nome da peça
+
+SELECT p.nome, p.cor from tbl_fornecedor f FULL JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor FULL JOIN tbl_peca p ON e.cod_peca = p.cod_peca WHERE f.cod_fornecedor = 3 ORDER BY p.nome ;
+  nome   |   cor
+---------+----------
+ CADERNO | PRETA
+ MESA    | VERMELHA
+(2 registros)
+
+
+
+--4 Listar o nome e a cidade dos fornecedores com mais de 10 peças.Contar só as peças de código 1. 
+
+SELECT e.cod_peca, f.nome, f.cidade, e.quantidade, count(e.quantidade > 10) FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade, e.quantidade;
+ cod_peca | nome | cidade  | quantidade | count
+----------+------+---------+------------+-------
+        1 | A    | LONDRES |         30 |     1
+        1 | B    | PARIS   |         30 |     1
+(2 registros)
+
+
+--5 Listar a quantidade total de peças com código 1, fornecidas pelos fornecedores.
+
+SELECT e.cod_peca, sum(e.quantidade) qtde_total FROM tbl_estoque e INNER JOIN tbl_fornecedor f ON e.cod_forn
+ecedor = f.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca;
+ cod_peca | qtde_total
+----------+------------
+        1 |         60
+(1 registro)
+
+
+--6 Listar a média dos preços das peças fornecidas pelo fornecedor com código 3.
+
+SELECT avg(p.preco) FROM tbl_peca p INNER JOIN tbl_estoque e ON e.cod_peca = p.cod_peca INNER JOIN tbl_fornecedor f ON f.cod_fornecedor = e.cod_fornecedor WHERE f.cod_fornecedor = 3;
+         avg
+---------------------
+ 12.0000000000000000
+(1 registro)
+
+
+--7 lista o valor da pecas mais cara e a mais barata.
+
+SELECT max(p.preco) mais_cara, min(p.preco) mais_barata FROM tbl_peca p ;
+ mais_cara | mais_barata
+-----------+-------------
+        14 |           5
+(1 registro)
+
+
+--8 listar a quantidade de peças cadastradas
+
+ select count(p.cod_peca) qtde from tbl_peca p ;
+ qtde
+------
+    4
+(1 registro)
+
+
+
+--9 listar a quantidade de cidades diferentes onde existem peças cadastradas
+
+ SELECT DISTINCT p.cidade from tbl_peca p ;
+ cidade
+---------
+ LONDRES
+ PARIS
+ ROMA
+(3 registros)
+
+
+
+--10 listar a media dos precos de todas as peças, com somente 1 digito após a virgula.
+
+ SELECT ROUND(avg(p.preco), 1) FROM tbl_peca p ;
+ round
+-------
+  10.3
+(1 registro)

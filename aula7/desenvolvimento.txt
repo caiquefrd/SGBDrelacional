@@ -1,0 +1,703 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Senha para usuário postgres:
+
+psql (16rc1)
+AVISO: página de código do Console (850) difere da página de código do Windows (1252)
+         caracteres de 8 bits podem não funcionar corretamente. Veja página de
+         referência do psql "Notes for Windows users" para obter detalhes.
+Digite "help" para ajuda.
+
+postgres=# \c bd_aula07
+Você está conectado agora ao banco de dados "bd_aula07" como usuário "postgres".
+bd_aula07=# \d
+                         Lista de relaþ§es
+ Esquema |               Nome                |   Tipo    |   Dono
+---------+-----------------------------------+-----------+----------
+ public  | tbl_estoque                       | tabela    | postgres
+ public  | tbl_estoque_cod_compra_seq        | sequÛncia | postgres
+ public  | tbl_fornecedor                    | tabela    | postgres
+ public  | tbl_fornecedor_cod_fornecedor_seq | sequÛncia | postgres
+ public  | tbl_peca                          | tabela    | postgres
+ public  | tbl_peca_cod_peca_seq             | sequÛncia | postgres
+(6 registros)
+
+
+bd_aula07=# select f.nome, f.cidade from tbl_fornecedor f INNER
+bd_aula07-# select f.nome, f.cidade from tbl_fornecedor f INNER
+bd_aula07-# JOIN tbl_peca p ON f.cidade = p.cidade ;
+ERRO:  erro de sintaxe em ou próximo a "select"
+LINHA 2: select f.nome, f.cidade from tbl_fornecedor f INNER
+         ^
+bd_aula07=# SELECT f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade ;
+ nome | cidade
+------+---------
+ A    | LONDRES
+ A    | LONDRES
+ B    | PARIS
+ C    | PARIS
+ D    | LONDRES
+ D    | LONDRES
+(6 registros)
+
+
+bd_aula07=# SELECT f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade WHERE cod_peca >
+10 ;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade WHERE cod_peca > 1 ;
+ nome | cidade
+------+---------
+ A    | LONDRES
+ B    | PARIS
+ C    | PARIS
+ D    | LONDRES
+(4 registros)
+
+
+bd_aula07=# SELECT f.nome, f.cidade, count(p.cod_peca) from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidad
+e WHERE cod_peca > 1 ;
+ERRO:  coluna "f.nome" deve aparecer na cláusula GROUP BY ou ser utilizada em uma função de agregação
+LINHA 1: SELECT f.nome, f.cidade, count(p.cod_peca) from tbl_forneced...
+                ^
+bd_aula07=# SELECT f.nome, f.cidade, count(p.cod_peca) from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade ;
+ERRO:  coluna "f.nome" deve aparecer na cláusula GROUP BY ou ser utilizada em uma função de agregação
+LINHA 1: SELECT f.nome, f.cidade, count(p.cod_peca) from tbl_forneced...
+                ^
+bd_aula07=# SELECT f.nome, f.cidade, count(p.cod_peca = 1)  from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.
+cidade ;
+ERRO:  coluna "f.nome" deve aparecer na cláusula GROUP BY ou ser utilizada em uma função de agregação
+LINHA 1: SELECT f.nome, f.cidade, count(p.cod_peca = 1)  from tbl_for...
+                ^
+bd_aula07=# SELECT f.nome, f.cidade, count(p.cod_peca = 1) from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.c
+idade ;
+ERRO:  coluna "f.nome" deve aparecer na cláusula GROUP BY ou ser utilizada em uma função de agregação
+LINHA 1: SELECT f.nome, f.cidade, count(p.cod_peca = 1) from tbl_forn...
+                ^
+bd_aula07=# SELECT f.nome, f.cidade, count(f.nome) from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade ;
+ERRO:  coluna "f.nome" deve aparecer na cláusula GROUP BY ou ser utilizada em uma função de agregação
+LINHA 1: SELECT f.nome, f.cidade, count(f.nome) from tbl_fornecedor f...
+                ^
+bd_aula07=# SELECT f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade ;
+ nome | cidade
+------+---------
+ A    | LONDRES
+ A    | LONDRES
+ B    | PARIS
+ C    | PARIS
+ D    | LONDRES
+ D    | LONDRES
+(6 registros)
+
+
+bd_aula07=# SELECT count(p.cod_peca), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidad
+e ;
+ERRO:  coluna "f.nome" deve aparecer na cláusula GROUP BY ou ser utilizada em uma função de agregação
+LINHA 1: SELECT count(p.cod_peca), f.nome, f.cidade from tbl_forneced...
+                                   ^
+bd_aula07=# SELECT count(p.cod_peca), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade GROUP BY f.nome ;
+ERRO:  coluna "f.cidade" deve aparecer na cláusula GROUP BY ou ser utilizada em uma função de agregação
+LINHA 1: SELECT count(p.cod_peca), f.nome, f.cidade from tbl_forneced...
+                                           ^
+bd_aula07=# SELECT count(p.cod_peca), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade GROUP BY f.nome, f.cidade ;
+ count | nome | cidade
+-------+------+---------
+     2 | A    | LONDRES
+     1 | B    | PARIS
+     1 | C    | PARIS
+     2 | D    | LONDRES
+(4 registros)
+
+
+bd_aula07=# SELECT count(p.cod_peca = 1), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.c
+idade GROUP BY f.nome, f.cidade ;
+ count | nome | cidade
+-------+------+---------
+     2 | A    | LONDRES
+     1 | B    | PARIS
+     1 | C    | PARIS
+     2 | D    | LONDRES
+(4 registros)
+
+
+bd_aula07=# SELECT count(p.cod_peca = 1), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade WHERE p.cod_peca = 1 GROUP BY f.nome, f.cidade ;
+ count | nome | cidade
+-------+------+---------
+     1 | A    | LONDRES
+     1 | D    | LONDRES
+(2 registros)
+
+
+bd_aula07=# SELECT count(p.cod_peca), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidad
+e WHERE p.cod_peca = 1 GROUP BY f.nome, f.cidade ;
+ count | nome | cidade
+-------+------+---------
+     1 | A    | LONDRES
+     1 | D    | LONDRES
+(2 registros)
+
+
+bd_aula07=# SELECT count(p.cod_peca), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidad
+e WHERE p.cod_peca = 1 GROUP BY f.nome, f.cidade ;
+ count | nome | cidade
+-------+------+---------
+     1 | A    | LONDRES
+     1 | D    | LONDRES
+(2 registros)
+
+
+bd_aula07=# SELECT count(p.cod_peca = 1), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.c
+idade WHERE p.cod_peca > 10 GROUP BY f.nome, f.cidade ;
+ count | nome | cidade
+-------+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT count(p.cod_peca = 1), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade WHERE p.cod_peca  GROUP BY f.nome, f.cidade ;
+ERRO:  argumento do WHERE deve ser do tipo boolean, e não do tipo integer
+LINHA 1: ...NNER JOIN tbl_peca p on f.cidade = p.cidade WHERE p.cod_peca...
+                                                              ^
+bd_aula07=# SELECT f.nome, f.cidade FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedo
+r WHERE e.cod_peca = 1 GROUP BY f.nome, f.cidade HAVING COUNT(*) > 10 ;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY f.nome, f.cidade HAVING COUNT(e.cod_peca) > 10 ;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade FROM tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_fornecedor = pListar o nome e a cidade dos fornecedores com mais de 10 peças.Contar só as peças de código 1.cod_fornecedor WHERE e.cod_peca = 1 GROUP B
+Y f.nome, f.cidade HAVING COUNT(*) > 10 ;
+ERRO:  erro de sintaxe em ou próximo a "o"
+LINHA 1: ...NER JOIN tbl_peca p ON f.cod_fornecedor = pListar o nome e a...
+                                                              ^
+bd_aula07=# SELECT f.nome, f.cidade FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY f.nome, f.cidade HAVING COUNT(e.cod_peca) > 10 ;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY f.nome, f.cidade HAVING COUNT(e.cod_peca) > 10 ;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade
+bd_aula07-# FROM tbl_fornecedor f
+bd_aula07-# INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor
+bd_aula07-# WHERE e.cod_peca = 1
+bd_aula07-# GROUP BY f.nome, f.cidade
+bd_aula07-# HAVING COUNT(*) > 10;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY f.nome, f.cidade HAVING COUNT(e.cod_peca) > 10 ;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade
+bd_aula07-# FROM tbl_fornecedor f
+bd_aula07-# INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor
+bd_aula07-# WHERE e.cod_peca = 1
+bd_aula07-# GROUP BY f.nome, f.cidade
+bd_aula07-# HAVING COUNT(e.cod_peca) > 10;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade
+bd_aula07-# FROM tbl_fornecedor f
+bd_aula07-# INNER JOIN tbl_peca e ON f.cod_fornecedor = e.cod_fornecedor
+bd_aula07-# WHERE e.cod_peca = 1
+bd_aula07-# GROUP BY f.nome, f.cidade
+bd_aula07-# HAVING COUNT(e.cod_peca) > 10;
+ERRO:  coluna e.cod_fornecedor não existe
+LINHA 3: INNER JOIN tbl_peca e ON f.cod_fornecedor = e.cod_fornecedor
+                                                     ^
+DICA:  Perhaps you meant to reference the column "f.cod_fornecedor".
+bd_aula07=# SELECT f.nome, f.cidade FROM tbl_fornecedor f FULL JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor FULL JOIN tbl_peca p ON e.cod_peca = p.cod_peca WHERE e.cod_peca = 1 GROUP BY f.nome, f.cidade HAVING COUNT(p.cod_peca)
+ > 10 ;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# tbl_fornecedor f FULL JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor FULL JOIN tbl_peca p ON e.cod_peca = p.cod_peca ;
+ERRO:  erro de sintaxe em ou próximo a "tbl_fornecedor"
+LINHA 1: tbl_fornecedor f FULL JOIN tbl_estoque e ON f.cod_fornecedor...
+         ^
+bd_aula07=# SELECT COUNT(e.cod_peca) AS qtd_pecas, f.nome, f.cidade
+bd_aula07-# FROM tbl_fornecedor f
+bd_aula07-# INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor
+bd_aula07-# WHERE e.cod_peca = 1
+bd_aula07-# GROUP BY f.nome, f.cidade
+bd_aula07-# HAVING COUNT(e.cod_peca) > 10;
+ qtd_pecas | nome | cidade
+-----------+------+--------
+(0 registro)
+
+
+bd_aula07=# \d
+                         Lista de relaþ§es
+ Esquema |               Nome                |   Tipo    |   Dono
+---------+-----------------------------------+-----------+----------
+ public  | tbl_estoque                       | tabela    | postgres
+ public  | tbl_estoque_cod_compra_seq        | sequÛncia | postgres
+ public  | tbl_fornecedor                    | tabela    | postgres
+ public  | tbl_fornecedor_cod_fornecedor_seq | sequÛncia | postgres
+ public  | tbl_peca                          | tabela    | postgres
+ public  | tbl_peca_cod_peca_seq             | sequÛncia | postgres
+(6 registros)
+
+
+bd_aula07=# \d tbl_peca
+                                Tabela "public.tbl_peca"
+  Coluna  |  Tipo   | Collation | Nullable |                  Default
+----------+---------+-----------+----------+--------------------------------------------
+ cod_peca | integer |           | not null | nextval('tbl_peca_cod_peca_seq'::regclass)
+ nome     | text    |           | not null |
+ cor      | text    |           |          |
+ preco    | numeric |           |          |
+ cidade   | text    |           |          |
+═ndices:
+    "tbl_peca_pkey" PRIMARY KEY, btree (cod_peca)
+Referenciada por:
+    TABLE "tbl_estoque" CONSTRAINT "tbl_estoque_cod_peca_fkey" FOREIGN KEY (cod_peca) REFERENCES tbl_peca(cod_peca)
+
+
+bd_aula07=# select * from tbl_peca ;
+ cod_peca |  nome   |   cor    | preco | cidade
+----------+---------+----------+-------+---------
+        1 | PLACA   | AZUL     |     5 | LONDRES
+        2 | MESA    | VERMELHA |    10 | PARIS
+        3 | CADERNO | PRETA    |    14 | ROMA
+        4 | TESOURA | VERMELHA |    12 | LONDRES
+(4 registros)
+
+
+bd_aula07=# SELECT count(p.cod_peca), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidad
+
+bd_aula07-# SELECT count(p.cod_peca), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidad
+
+bd_aula07-# ;
+ERRO:  erro de sintaxe em ou próximo a "SELECT"
+LINHA 2: SELECT count(p.cod_peca), f.nome, f.cidade from tbl_forneced...
+         ^
+bd_aula07=# SELECT count(p.cod_peca), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidad
+
+bd_aula07-# e WHERE p.cod_peca = 1 GROUP BY f.nome, f.cidade ;
+ERRO:  erro de sintaxe em ou próximo a "e"
+LINHA 2: e WHERE p.cod_peca = 1 GROUP BY f.nome, f.cidade ;
+         ^
+bd_aula07=# SELECT count(p.cod_peca) = 1, f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_forneced
+or = p.cod_peca GROUP BY f.nome, f.cidade HAVING COUNT (e.cod_peca) > 10 ;
+ERRO:  faltando entrada para tabela "e" na cláusula FROM
+LINHA 1: ....cod_peca GROUP BY f.nome, f.cidade HAVING COUNT (e.cod_peca...
+                                                              ^
+bd_aula07=# SELECT count(p.cod_peca) = 1, f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_fornecedor = p.cod_peca GROUP BY f.nome, f.cidade HAVING COUNT (p.cod_peca) > 10 ;
+ ?column? | nome | cidade
+----------+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p on f.cidade = p.cidade ;
+ nome | cidade
+------+---------
+ A    | LONDRES
+ A    | LONDRES
+ B    | PARIS
+ C    | PARIS
+ D    | LONDRES
+ D    | LONDRES
+(6 registros)
+
+
+bd_aula07=# SELECT count(p.cod_peca) = 1, f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_fornecedor = p.cod_peca GROUP BY f.nome, f.cidade WHERE (p.cod_peca) > 10 ;
+ERRO:  erro de sintaxe em ou próximo a "WHERE"
+LINHA 1: ...fornecedor = p.cod_peca GROUP BY f.nome, f.cidade WHERE (p.c...
+                                                              ^
+bd_aula07=# SELECT count(p.cod_peca) = 1, f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_fornecedor = p.cod_peca GROUP BY f.nome, f.cidade WHERE p.cod_peca = 1 HAVING COUNT (p.cod_peca) > 10 ;
+ERRO:  erro de sintaxe em ou próximo a "WHERE"
+LINHA 1: ...fornecedor = p.cod_peca GROUP BY f.nome, f.cidade WHERE p.co...
+                                                              ^
+bd_aula07=# SELECT count(p.cod_peca) = 1, f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_fornecedor = p.cod_peca WHERE p.cod_peca = 1 HAVING COUNT (p.cod_peca) > 10 ;
+ERRO:  coluna "f.nome" deve aparecer na cláusula GROUP BY ou ser utilizada em uma função de agregação
+LINHA 1: SELECT count(p.cod_peca) = 1, f.nome, f.cidade from tbl_forn...
+                                       ^
+bd_aula07=# SELECT count(p.cod_peca) = 1, f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_fornecedor = p.cod_peca WHERE p.cod_peca = 1 GROUP BY f.nome, f.cidade HAVING COUNT (p.cod_peca) > 10 ;
+ ?column? | nome | cidade
+----------+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT count(p.cod_peca), f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_fornecedor =
+ p.cod_peca WHERE p.cod_peca = 1 GROUP BY f.nome, f.cidade HAVING COUNT (p.cod_peca) > 10 ;
+ count | nome | cidade
+-------+------+--------
+(0 registro)
+
+
+bd_aula07=#
+bd_aula07=# SELECT f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_fornecedor = p.cod_peca WHERE p
+.cod_peca = 1 GROUP BY f.nome, f.cidade HAVING COUNT (p.cod_peca) > 10 ;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_fornecedor = p.cod_peca WHERE p.cod_peca > 10 GROUP BY f.nome, f.cidade HAVING COUNT (p.cod_peca) > 10 ;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade from tbl_fornecedor f INNER JOIN tbl_peca p ON f.cod_fornecedor = p.cod_peca WHERE p.cod_peca > 10;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# select e.quantidade from tbl_estoque e ;
+ quantidade
+------------
+         30
+         30
+         10
+         50
+(4 registros)
+
+
+bd_aula07=# SELECT f.nome, f.cidade
+bd_aula07-# FROM tbl_fornecedor f
+bd_aula07-# INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor
+bd_aula07-# GROUP BY f.nome, f.cidade
+bd_aula07-# HAVING COUNT(*) > 10;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedo
+r GROUP BY f.nome, f.cidade HAVING COUNT(quantidade) > 10 ;
+ nome | cidade
+------+--------
+(0 registro)
+
+
+bd_aula07=# SELECT f.nome, f.cidade FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor GROUP BY f.nome, f.cidade COUNT(quantidade) > 10 ;
+ERRO:  erro de sintaxe em ou próximo a "COUNT"
+LINHA 1: ...edor = e.cod_fornecedor GROUP BY f.nome, f.cidade COUNT(quan...
+                                                              ^
+bd_aula07=# SELECT f.nome, f.cidade, count(e.quantidade) > 10 FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fo
+rnecedor = e.cod_fornecedor GROUP BY f.nome, f.cidade;
+ nome | cidade  | ?column?
+------+---------+----------
+ A    | LONDRES | f
+ B    | PARIS   | f
+ C    | PARIS   | f
+(3 registros)
+
+
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, count(e.quantidade) > 10 FROM tbl_fornecedor f INNER JOIN tbl_estoque e
+ ON f.cod_fornecedor = e.cod_fornecedor GROUP BY f.nome, f.cidade;
+ERRO:  coluna "e.cod_peca" deve aparecer na cláusula GROUP BY ou ser utilizada em uma função de agregação
+LINHA 1: SELECT e.cod_peca, f.nome, f.cidade, count(e.quantidade) > 1...
+                ^
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, count(e.quantidade) > 10 FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor GROUP BY e.cod_peca, f.nome, f.cidade;
+ cod_peca | nome | cidade  | ?column?
+----------+------+---------+----------
+        2 | C    | PARIS   | f
+        1 | A    | LONDRES | f
+        3 | C    | PARIS   | f
+        1 | B    | PARIS   | f
+(4 registros)
+
+
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, count(e.quantidade) > 10 FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade;
+ cod_peca | nome | cidade  | ?column?
+----------+------+---------+----------
+        1 | A    | LONDRES | f
+        1 | B    | PARIS   | f
+(2 registros)
+
+
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, count(e.quantidade > 10) FROM tbl_fornecedor f INNER JOIN tbl_estoque e
+ ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade;
+ cod_peca | nome | cidade  | count
+----------+------+---------+-------
+        1 | A    | LONDRES |     1
+        1 | B    | PARIS   |     1
+(2 registros)
+
+
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, , e.quantidade, count(e.quantidade > 10) FROM tbl_fornecedor f INNER JO
+IN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade;
+ERRO:  erro de sintaxe em ou próximo a ","
+LINHA 1: SELECT e.cod_peca, f.nome, f.cidade, , e.quantidade, count(e...
+                                              ^
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, e.quantidade, count(e.quantidade > 10) FROM tbl_fornecedor f INNER JOIN
+ tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade, e.quantidade;
+ cod_peca | nome | cidade  | quantidade | count
+----------+------+---------+------------+-------
+        1 | A    | LONDRES |         30 |     1
+        1 | B    | PARIS   |         30 |     1
+(2 registros)
+
+
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, e.quantidade, count(e.quantidade > 10) as qtde. FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade, e.quantidade;
+ERRO:  erro de sintaxe em ou próximo a "."
+LINHA 1: ...de, e.quantidade, count(e.quantidade > 10) as qtde. FROM tbl...
+                                                              ^
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, e.quantidade, count(e.quantidade > 10) as qtde FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade, e.quantidade;
+ cod_peca | nome | cidade  | quantidade | qtde
+----------+------+---------+------------+------
+        1 | A    | LONDRES |         30 |    1
+        1 | B    | PARIS   |         30 |    1
+(2 registros)
+
+
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, e.quantidade, count(e.quantidade > 10) as true FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade, e.quantidade;
+ cod_peca | nome | cidade  | quantidade | true
+----------+------+---------+------------+------
+        1 | A    | LONDRES |         30 |    1
+        1 | B    | PARIS   |         30 |    1
+(2 registros)
+
+
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, e.quantidade, count(e.quantidade > 10) as maior que 10 FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade, e.quantidade;
+ERRO:  erro de sintaxe em ou próximo a "que"
+LINHA 1: ..., e.quantidade, count(e.quantidade > 10) as maior que 10 FRO...
+                                                              ^
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, e.quantidade, count(e.quantidade > 10) as 10+ FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade, e.quantidade;
+ERRO:  erro de sintaxe em ou próximo a "10"
+LINHA 1: ...cidade, e.quantidade, count(e.quantidade > 10) as 10+ FROM t...
+                                                              ^
+bd_aula07=# SELECT e.cod_peca, f.nome, f.cidade, e.quantidade, count(e.quantidade > 10) FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor = e.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca, f.nome, f.cidade, e.quantidade;
+ cod_peca | nome | cidade  | quantidade | count
+----------+------+---------+------------+-------
+        1 | A    | LONDRES |         30 |     1
+        1 | B    | PARIS   |         30 |     1
+(2 registros)
+
+
+bd_aula07=# select e.quantidade FROM tbl_estoque INNER JOIN tbl_fornecedores f ON f.cod_fornecedor = e.cod_fornecedor ;
+ERRO:  relação "tbl_fornecedores" não existe
+LINHA 1: select e.quantidade FROM tbl_estoque INNER JOIN tbl_forneced...
+                                                         ^
+bd_aula07=# select e.quantidade FROM tbl_estoque INNER JOIN tbl_fornecedor f ON f.cod_fornecedor = e.cod_fornecedor ;
+ERRO:  faltando entrada para tabela "e" na cláusula FROM
+LINHA 1: ...INNER JOIN tbl_fornecedor f ON f.cod_fornecedor = e.cod_forn...
+                                                              ^
+bd_aula07=# select e.quantidade FROM tbl_estoque INNER JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_fornecedor ;
+ERRO:  faltando entrada para tabela "e" na cláusula FROM
+LINHA 1: ...e FROM tbl_estoque INNER JOIN tbl_fornecedor f ON e.cod_forn...
+                                                              ^
+bd_aula07=# select e.quantidade FROM tbl_estoque e INNER JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_fornecedor ;
+ quantidade
+------------
+         30
+         30
+         10
+         50
+(4 registros)
+
+
+bd_aula07=# select e.quantidade FROM tbl_estoque e INNER JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_fornecedor ;
+ quantidade
+------------
+         30
+         30
+         10
+         50
+(4 registros)
+
+
+bd_aula07=# select e.quantidade FROM tbl_estoque e INNER JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_fornecedor WHERE e.cod_peca = 1;
+ quantidade
+------------
+         30
+         30
+(2 registros)
+
+
+bd_aula07=# select e.cod_peca, e.quantidade FROM tbl_estoque e INNER JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_f
+ornecedor WHERE e.cod_peca = 1;
+ cod_peca | quantidade
+----------+------------
+        1 |         30
+        1 |         30
+(2 registros)
+
+
+bd_aula07=# SELECT avg(p.preco) FROM tbl_peca INNER JOIN tbl_estoque e ON e.cod_peca = p.cod_peca INNER JOIN tbl_fornece
+dor f ON f.cod_fornecedor = e.cod_fornecedor ;
+ERRO:  faltando entrada para tabela "p" na cláusula FROM
+LINHA 1: ...tbl_peca INNER JOIN tbl_estoque e ON e.cod_peca = p.cod_peca...
+                                                              ^
+bd_aula07=# SELECT avg(p.preco) FROM tbl_peca p INNER JOIN tbl_estoque e ON e.cod_peca = p.cod_peca INNER JOIN tbl_forne
+cedor f ON f.cod_fornecedor = e.cod_fornecedor ;
+        avg
+--------------------
+ 8.5000000000000000
+(1 registro)
+
+
+bd_aula07=# SELECT avg(p.preco) FROM tbl_peca p INNER JOIN tbl_estoque e ON e.cod_peca = p.cod_peca INNER JOIN tbl_fornecedor f ON f.cod_fornecedor = e.cod_fornecedor WHERE f.cod_fornecedor = 3;
+         avg
+---------------------
+ 12.0000000000000000
+(1 registro)
+
+
+bd_aula07=# select e.cod_peca, sum(e.quantidade) FROM tbl_estoque e INNER JOIN tbl_fornecedor f ON e.cod_fornecedor = f.
+cod_fornecedor WHERE e.cod_peca = 1;
+ERRO:  coluna "e.cod_peca" deve aparecer na cláusula GROUP BY ou ser utilizada em uma função de agregação
+LINHA 1: select e.cod_peca, sum(e.quantidade) FROM tbl_estoque e INNE...
+                ^
+bd_aula07=# select e.cod_peca, sum(e.quantidade) FROM tbl_estoque e INNER JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca;
+ cod_peca | sum
+----------+-----
+        1 |  60
+(1 registro)
+
+
+bd_aula07=# select e.cod_peca, sum(e.quantidade) qtde total FROM tbl_estoque e INNER JOIN tbl_fornecedor f ON e.cod_forn
+ecedor = f.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca;
+ERRO:  erro de sintaxe em ou próximo a "total"
+LINHA 1: select e.cod_peca, sum(e.quantidade) qtde total FROM tbl_est...
+                                                   ^
+bd_aula07=# select e.cod_peca, sum(e.quantidade) qtde_total FROM tbl_estoque e INNER JOIN tbl_fornecedor f ON e.cod_forn
+ecedor = f.cod_fornecedor WHERE e.cod_peca = 1 GROUP BY e.cod_peca;
+ cod_peca | qtde_total
+----------+------------
+        1 |         60
+(1 registro)
+
+
+bd_aula07=# SELECT max(p.preco) mais_cara, min(p.preco) mais_barata FROM tbl_peca p ;
+ mais_cara | mais_barata
+-----------+-------------
+        14 |           5
+(1 registro)
+
+
+bd_aula07=# select p.preco from tbl_preca ;
+ERRO:  relação "tbl_preca" não existe
+LINHA 1: select p.preco from tbl_preca ;
+                             ^
+bd_aula07=# select p.preco from tbl_peca ;
+ERRO:  faltando entrada para tabela "p" na cláusula FROM
+LINHA 1: select p.preco from tbl_peca ;
+                ^
+bd_aula07=# select p.preco from tbl_peca p ;
+ preco
+-------
+     5
+    10
+    14
+    12
+(4 registros)
+
+
+bd_aula07=# select count(p.cod_peca) from tbl_peca p ;
+ count
+-------
+     4
+(1 registro)
+
+
+bd_aula07=# select count(p.cod_peca) qtde from tbl_peca p ;
+ qtde
+------
+    4
+(1 registro)
+
+
+bd_aula07=# SELECT ROUND(avg(p.preco), 2) FROM tbl_peca p INNER JOIN tbl_estoque e ON e.cod_peca = p.cod_peca INNER JOIN
+ tbl_fornecedor f ON f.cod_fornecedor = e.cod_fornecedor ;
+ round
+-------
+  8.50
+(1 registro)
+
+
+bd_aula07=# SELECT ROUND(avg(p.preco), 3) FROM tbl_peca p INNER JOIN tbl_estoque e ON e.cod_peca = p.cod_peca INNER JOIN
+ tbl_fornecedor f ON f.cod_fornecedor = e.cod_fornecedor ;
+ round
+-------
+ 8.500
+(1 registro)
+
+
+bd_aula07=# SELECT ROUND(avg(p.preco), 1) FROM tbl_peca p INNER JOIN tbl_estoque e ON e.cod_peca = p.cod_peca INNER JOIN
+ tbl_fornecedor f ON f.cod_fornecedor = e.cod_fornecedor ;
+ round
+-------
+   8.5
+(1 registro)
+
+
+bd_aula07=# select * from tbl_peca ;
+ cod_peca |  nome   |   cor    | preco | cidade
+----------+---------+----------+-------+---------
+        1 | PLACA   | AZUL     |     5 | LONDRES
+        2 | MESA    | VERMELHA |    10 | PARIS
+        3 | CADERNO | PRETA    |    14 | ROMA
+        4 | TESOURA | VERMELHA |    12 | LONDRES
+(4 registros)
+
+
+bd_aula07=# SELECT avg(preco) from tbl_peca .
+bd_aula07-# ;
+ERRO:  erro de sintaxe em ou próximo a ";"
+LINHA 2: ;
+         ^
+bd_aula07=# SELECT avg(preco) from tbl_peca ;
+         avg
+---------------------
+ 10.2500000000000000
+(1 registro)
+
+
+bd_aula07=# SELECT ROUND(avg(p.preco), 1) FROM tbl_peca p ;
+ round
+-------
+  10.3
+(1 registro)
+
+
+bd_aula07=# SELECT DISTINCT p.cidade from tbl_peca p ;
+ cidade
+---------
+ LONDRES
+ PARIS
+ ROMA
+(3 registros)
+
+
+bd_aula07=# select * from tbl_peca;
+ cod_peca |  nome   |   cor    | preco | cidade
+----------+---------+----------+-------+---------
+        1 | PLACA   | AZUL     |     5 | LONDRES
+        2 | MESA    | VERMELHA |    10 | PARIS
+        3 | CADERNO | PRETA    |    14 | ROMA
+        4 | TESOURA | VERMELHA |    12 | LONDRES
+(4 registros)
+
+
+bd_aula07=#

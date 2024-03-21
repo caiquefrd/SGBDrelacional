@@ -1,0 +1,8 @@
+create domain chk_categoria text check (value = 'DRAMA' or value = 'COMEDIA' ) ;
+create domain chk_status text check (value = 'DISPONIVEL' or value = 'ALUGADO' ) ; 
+create table tbl_cliente (codigo_cliente integer PRIMARY KEY, nome varchar(20) NOT NULL, cidade varchar(20), endereco varchar(255));
+create table tbl_titulo ( codig_titulo integer PRIMARY KEY, titulo varchar(20) NOT NULL, descricao varchar(255), categoria chk_categoria );
+create table tbl_emprestimo ( numero_emprestimo integer PRIMARY KEY, codigo_cliente integer, codigo_livro integer);
+create table tbl_livros ( cod_livro integer PRIMARY KEY, codigo_titulo varchar(20), status chk_status );
+
+

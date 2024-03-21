@@ -1,4 +1,4 @@
-bd_aula03=# begin ;
+wbd_aula03=# begin ;
 BEGIN
 bd_aula03=*# create domain chk_categoria text check (value = 'DRAMA' or value = 'COMEDIA' ) ;
 CREATE DOMAIN
