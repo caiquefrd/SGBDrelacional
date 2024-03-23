@@ -1,0 +1,80 @@
+--1 Listar o nome e a cidade dos fornecedores com mais de 10 peças.Contar só as peças de código 1.
+
+SELECT nome, cidade from tbl_fornecedor WHERE cod_fornecedor IN ( SELECT cod_fornecedor FROM tbl_estoque WHERE quantidade > 10 AND cod_peca = 1 );
+ nome | cidade
+------+---------
+ A    | LONDRES
+ B    | PARIS
+(2 registros)
+
+
+
+--2  Encontre o nome das peças com preço superior a 10 que estão disponíveis em estoque:
+
+SELECT p.nome FROM tbl_peca p WHERE p.preco > 10 AND EXISTS ( SELECT FROM tbl_estoque e WHERE e.cod_peca = p.cod_peca );
+
+
+
+--3 Selecione o nome das peças que não estão em estoque:
+
+SELECT p.nome FROM tbl_peca p WHERE NOT EXISTS ( SELECT FROM tbl_estoque e WHERE e.cod_peca = p.cod_peca );
+
+
+
+--4 Encontre o nome das peças que estão em estoque com uma quantidade maior que 20:
+
+SELECT DISTINCT p.nome FROM tbl_peca p JOIN tbl_estoque e ON p.cod_peca = e.cod_peca WHERE e.quantidade > 20
+;
+
+
+--5 Listar todas as pecas exceto a PLACA, ordenado por nome
+
+SELECT * FROM tbl_peca WHERE cod_peca NOT IN ( SELECT cod_peca FROM tbl_peca WHERE nome = 'PLACA' )
+ORDER BY nome;
+
+
+
+
+--6 Listar o nome e a cor das peças do fornecedor C, ordenado pelo nome da peça
+
+SELECT p.nome, p.cor
+FROM tbl_peca p
+JOIN tbl_estoque e ON p.cod_peca = e.cod_peca
+JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_fornecedor
+WHERE f.nome =
+
+
+
+
+
+--7 Listar o nome e a cor de todas as pecas de Londres
+
+SELECT p.nome, p.cor FROM tbl_peca p JOIN tbl_estoque e ON p.cod_peca = e.cod_peca JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_fornecedor WHERE f.cidade = 'LONDRES';
+
+
+
+
+--8 Encontre o nome das peças que estão disponíveis em estoque em Londres e não estão disponíveis em estoque em Paris:
+
+SELECT p.nome
+FROM tbl_peca p
+JOIN tbl_estoque e ON p.cod_peca = e.cod_peca
+JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_fornecedor
+WHERE f.cidade = 'LONDRES'
+AND p.cod_peca NOT IN (
+    SELECT e2.cod_peca
+    FROM tbl_estoque e2
+    JOIN tbl_fornecedor f2 ON e2.cod_fornecedor = f2.cod_fornecedor
+    WHERE f2.cidade = 'PARIS'
+);
+
+ 
+
+
+
+--9 Quais os codigos das peças que possuem maior estoque do que a peça de codigo 2?
+
+SELECT cod_peca FROM tbl_estoque WHERE quantidade > ( SELECT quantidade FROM tbl_estoque WHERE cod_peca = 2 )
+AND cod_peca <> 2;
+
+
