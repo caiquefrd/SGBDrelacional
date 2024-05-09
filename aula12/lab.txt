@@ -1,0 +1,84 @@
+--1 Crie uma funcao denominada fc_soma que recebe dois valores inteiros e retorna o valor resultante da soma de ambos
+
+CREATE OR REPLACE FUNCTION fc_soma(a INT, b INT)
+RETURNS INT AS $$
+BEGIN
+    RETURN a + b;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+--2 Crie uma funcao denominada fc_maior_salario, que sem usar função agregada MAX, retorne o nome do empregado com o maior salario.
+
+CREATE OR REPLACE FUNCTION fc_maior_salario()
+RETURNS TEXT AS $$
+DECLARE
+    max_salario REAL;
+    emp_name TEXT;
+BEGIN
+    SELECT MAX(salario) INTO max_salario FROM tbl_empregados;
+    SELECT nome INTO emp_name FROM tbl_empregados WHERE salario = max_salario LIMIT 1;
+    RETURN emp_name;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+--3 crie a funcao fc_media_salario que retorna a media dos salarios dos empregados
+
+CREATE OR REPLACE FUNCTION fc_media_salario()
+RETURNS REAL AS $$
+DECLARE
+    avg_salario REAL;
+BEGIN
+    SELECT AVG(salario) INTO avg_salario FROM tbl_empregados;
+    RETURN avg_salario;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+
+--4 Crie a funcao fc_salarios que recebe o código do empregado como parâmetro e retorne o salário, o salário acrescido de 10% e o salário reduzido em 15%.
+
+CREATE OR REPLACE FUNCTION fc_salarios(emp_id INT)
+RETURNS TABLE (salario REAL, salario_aumentado REAL, salario_reduzido REAL) AS $$
+DECLARE
+    current_salario REAL;
+BEGIN
+    SELECT salario INTO current_salario FROM tbl_empregados WHERE cod_empregado = emp_id;
+    RETURN QUERY SELECT current_salario, current_salario * 1.10, current_salario * 0.85;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+--5 Crie uma funcao denominada fc_projetos que liste o código e o nome de todos os projetos cadastrados.
+
+CREATE OR REPLACE FUNCTION fc_projetos()
+RETURNS TABLE (cod_projeto INT, nome_projeto TEXT) AS $$
+BEGIN
+    RETURN QUERY SELECT cod_projeto, nome FROM tbl_projetos;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+--6 Crie a funcao fc_proj_departmento que recebe o codigo do departamento e mostra quantos projetos o departamento possui
+
+
+CREATE OR REPLACE FUNCTION fc_proj_departmento(dep_id INT)
+RETURNS INT AS $$
+DECLARE
+    count_projetos INT;
+BEGIN
+    SELECT COUNT(*) INTO count_projetos FROM tbl_projetos WHERE cod_departamento = dep_id;
+    RETURN count_projetos;
+END;
+$$ LANGUAGE plpgsql;

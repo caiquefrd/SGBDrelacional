@@ -1,0 +1,61 @@
+postgres=# create database bd_aula13
+postgres-# ;
+CREATE DATABASE
+postgres=# \c bd_aula13
+Agora você está conectado ao banco de dados "bd_aula13" como usuário "postgres".
+bd_aula13=# CREATE TABLE tabela01 (id integer, nome text, salario real);
+CREATE TABLE
+bd_aula13=# INSERT INTO tabela01 VALUES (1,'Paulo',1000),(2,'Pedro',5000),(3,'Maria',10000);
+INSERT 0 3
+bd_aula13=# SELECT * from tabela01;
+ id | nome  | salario
+----+-------+---------
+  1 | Paulo |    1000
+  2 | Pedro |    5000
+  3 | Maria |   10000
+(3 linhas)
+
+
+bd_aula13=# CREATE USER usuario01 with password 'teste';
+CREATE ROLE
+bd_aula13=# \du
+                                                  Lista de funþ§es de banco de dados (roles)
+ Nome da funþÒo de banco de dados (role) |                                             Atributos
+
+-----------------------------------------+----------------------------------------------------------------------------------------------------
+ postgres                                | Superusußrio, Cria funþÒo de banco de dados (role), Cria banco de dados, ReplicaþÒo, Contornar RLS
+ usuario01                               |
+
+
+bd_aula13=# \conninfo
+Você está conectado ao banco de dados "bd_aula13" como usuário "postgres" no hospedeiro "localhost" (endereço ::1") na porta "5432".
+bd_aula13=# \c bd_aula15 usuario01
+Senha para o usuário usuario01:
+
+a conexão com o servidor em "localhost" (::1), porta 5432 falhou: FATAL:  autenticação do tipo senha falhou para o usuário "usuario01"
+Conexão anterior mantida
+bd_aula13=#
+bd_aula13=# GRANT select on tabela01 to usuario01;
+GRANT
+bd_aula13=#
+bd_aula13=# REVOKE select on tabela01 FROM usuario01;
+REVOKE
+bd_aula13=#
+bd_aula13=# CREATE VIEW v_tabela01 as select * from tabela01 where salario < 10000;
+CREATE VIEW
+bd_aula13=#
+bd_aula13=# select * from v_tabela01;
+ id | nome  | salario
+----+-------+---------
+  1 | Paulo |    1000
+  2 | Pedro |    5000
+(2 linhas)
+
+
+bd_aula13=#
+bd_aula13=# GRANT select on v_tabela01 to usuario01;
+GRANT
+bd_aula13=#
+bd_aula13=# ALTER USER usuario01 WITH superuser;
+ALTER ROLE
+bd_aula13=#

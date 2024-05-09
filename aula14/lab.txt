@@ -1,0 +1,63 @@
+-- exercicios
+
+
+
+--1 crie uma trigger que atualiza a quantidade de projetos da tbl_departamentos caso um projeto for deletado
+
+CREATE TRIGGER after_project_delete
+AFTER DELETE ON tbl_projetos
+FOR EACH ROW
+BEGIN
+    UPDATE tbl_departamentos
+    SET quantidade_projetos = quantidade_projetos - 1
+    WHERE cod_departamento = OLD.cod_departamento;
+END;
+
+
+
+--2 crie uma trigger que atualiza a quantidade de projetos da tbl_departamentos caso um novo projeto for adicionado
+
+CREATE TRIGGER after_project_insert
+AFTER INSERT ON tbl_projetos
+FOR EACH ROW
+BEGIN
+    UPDATE tbl_departamentos
+    SET quantidade_projetos = quantidade_projetos + 1
+    WHERE cod_departamento = NEW.cod_departamento;
+END;
+
+
+
+
+--3 a) Crie uma tabela chamada tbl_empregado_historico_salario com as colunas cod_empregado e salario e data
+--  b) crie uma trigger que salva o salario atual de um empregado toda vez que seu salario for atualizado
+-- dica: use a funcao now() para salvar a data
+
+CREATE TABLE tbl_empregado_historico_salario (
+    cod_empregado INT,
+    salario DECIMAL(10,2),
+    data TIMESTAMP
+);
+
+CREATE TRIGGER after_salary_update
+AFTER UPDATE ON tbl_empregados
+FOR EACH ROW
+WHEN (OLD.salario <> NEW.salario)
+BEGIN
+    INSERT INTO tbl_empregado_historico_salario (cod_empregado, salario, data)
+    VALUES (NEW.cod_empregado, NEW.salario, NOW());
+END;
+
+
+
+--4 a) crie uma coluna chamada data_atualizacao na tbl_empregados do tipo TIMESTAMP
+-- b) crie uma trigger que toda vez que os dados do empregado forem atualizados, que essa data tambem seja atualizada. 
+
+ALTER TABLE tbl_empregados
+ADD COLUMN data_atualizacao TIMESTAMP;
+
+
+CREATE TRIGGER after_empregado_update
+AFTER UPDATE ON tbl_empregados
+FOR EACH ROW
+BEGIN
