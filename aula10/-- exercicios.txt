@@ -1,0 +1,92 @@
+-- exercicios
+
+
+--1 crie uma view chamada v_depcidade que liste o nome de cada departamento com o nome da cidade onde este departamento está localizado.
+--Após a criacao executar Select * from v_depcidade; retorna 36 linhas
+
+bd_aula10=# create view v_depcidade(nome_dep, nome_cid) AS select d.nome, c.nome from tbl_departamentos d JOIN tbl_cidades c ON d.cod_cidade = c.cod_cidade ;
+bd_aula10=# select * from v_depcidade ;
+    nome_dep     |  nome_cid
+-----------------+-------------
+ Departamento 1  | New York
+ Departamento 2  | Los Angeles
+ Departamento 3  | Chicago
+ Departamento 4  | Houston
+ Departamento 5  | Houston
+ Departamento 6  | Houston
+ Departamento 7  | Houston
+ Departamento 8  | Phoenix
+ Departamento 9  | Phoenix
+ Departamento 10 | San Jose
+ Departamento 11 | San Jose
+ Departamento 12 | San Jose
+ Departamento 13 | San Jose
+ Departamento 14 | San Jose
+ Departamento 15 | San Jose
+ Departamento 16 | San Jose
+ Departamento 17 | San Jose
+ Departamento 18 | Seattle
+ Departamento 19 | Seattle
+ Departamento 20 | Las Vegas
+ Departamento 21 | Detroit
+ Departamento 22 | Detroit
+ Departamento 23 | Detroit
+ Departamento 24 | Detroit
+ Departamento 25 | Detroit
+ Departamento 26 | Detroit
+ Departamento 27 | Memphis
+ Departamento 28 | Memphis
+ Departamento 29 | Memphis
+ Departamento 30 | Louisville
+ Departamento 31 | Milwaukee
+ Departamento 32 | Albuquerque
+ Departamento 33 | Louisville
+ Departamento 34 | Louisville
+ Departamento 35 | Louisville
+ Departamento 36 | Louisville
+(36 linhas)
+
+
+
+--2 crie uma view denominada v_depcidadehouston, a partir de v_depcidade que mostre somente os departamentos localizados em Houston
+-- execute select * from v_depcidadehouston
+
+create view v_depcidadehouston AS select * from v_depcidade WHERE nome_cid = 'Houston' ;
+
+
+--3 Crie uma visão denominada de v_opsalario, a qual lista a soma e média de todos os salários dos empregados.
+-- execute select * from v_opsalario
+
+bd_aula10=# create view v_opsalario(soma, media) AS select SUM(e.salario), AVG(e.salario) from tbl_empregados e;
+CREATE VIEW
+bd_aula10=# select * from v_opsalario ;
+  soma  | media
+--------+--------
+ 212300 | 5307.5
+(1 linha)
+
+
+--4 Criar a view vw_empregados_salarial que exibe o nome e o salário de todos os empregados com salário acima de 5500.
+-- execute select * from v_empregados_salarial
+
+bd_aula10=# create or replace view vw_empregados_salarial(nome_empregado, salario_empregado) as select e.nome, e.salario from tbl_empregados e where e.salario > 5500 ;
+CREATE VIEW
+bd_aula10=# select * from vw_empregados_salarial ;
+  nome_empregado  | salario_empregado
+------------------+-------------------
+ Gustavo Costa    |              5600
+ Felipe Pereira   |              5700
+ Adriana Lima     |              5600
+ Marcos Fernandes |              5700
+ Fernanda Barbosa |              5600
+ Gustavo Gomes    |              5700
+ Lúcia Castro     |              5600
+(7 linhas)
+
+
+
+--5 criar uma view v_departemp para listar os departamentos e a quantidade de empregados em cada um
+-- listar os departamentos e as quantidades por ordem decrescente de quantidade.
+
+
+--6 criar uma view v_departrouble para listar os nomes dos departamentos que possuem mais projetos do que empregados.
