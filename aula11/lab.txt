@@ -1,0 +1,76 @@
+--1 crie uma store procedure chamada proc_upd_nome_depart para atualizar o nome de um departamento. 
+--recebe como parametro um codigo inteiro e um novonome em texto atualizando o nome do departamento com esse respectivo codigo
+
+CREATE OR REPLACE FUNCTION proc_upd_nome_depart(codigo INT, novonome TEXT)
+RETURNS VOID AS $$
+BEGIN
+    UPDATE tbl_departamentos
+    SET nome = novonome
+    WHERE cod_departamento = codigo;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+--2 crie uma store procedure chamada proc_copiatbl que cria uma copia da tabela tbl_cidades toda vez que for executada;
+
+CREATE OR REPLACE FUNCTION proc_copiatbl()
+RETURNS VOID AS $$
+BEGIN
+    DROP TABLE IF EXISTS tbl_cidades_copy;
+    CREATE TABLE tbl_cidades_copy AS
+    SELECT * FROM tbl_cidades;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+--3 crie uma store procedure chamada proc_novoprojeto que adiciona um novo projeto na tabela tbl_projetos
+--recebe como parametros o nome do projeto e o codigo do departamento
+
+CREATE OR REPLACE FUNCTION proc_novoprojeto(nome_proj TEXT, cod_dept INT)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO tbl_projetos (nome, cod_departamento)
+    VALUES (nome_proj, cod_dept);
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+--4 crie uma store procedure chamada proc_delprojeto que deleta um projeto da tbl_projetos
+-- recebe como parametro o codigo do projeto
+
+CREATE PROCEDURE proc_delprojeto(IN codigo_projeto INT)
+BEGIN
+    DELETE FROM tbl_projetos WHERE codigo = codigo_projeto;
+END;
+
+
+
+--5 crie uma store procedure chamada proc_projeto_arquivado que recebe o codigo de um projeto.
+--a procedure devera criar uma tabela chamada tbl_projetos_arquivados, caso ela nao exista. tabela deve ter 2 colunas: codigo_projeto e nome.
+--a procedure deve salvar o projeto do codigo recebido na tbl_projetos_arquivados e deleta-la da tabela tbl_projetos.
+
+CREATE PROCEDURE proc_projeto_arquivado(IN codigo_projeto INT)
+BEGIN
+    -- Verificar se a tabela 'tbl_projetos_arquivados' existe; criar se não existir
+    IF NOT EXISTS (SELECT * FROM information_schema.tables 
+                   WHERE table_schema = 'NomeDoSeuDatabase' -- substitua pelo nome do seu schema
+                   AND table_name = 'tbl_projetos_arquivados') THEN
+        CREATE TABLE tbl_projetos_arquivados (
+            codigo_projeto INT,
+            nome VARCHAR(255)
+        );
+    END IF;
+
+    -- Inserir o projeto na tabela 'tbl_projetos_arquivados'
+    INSERT INTO tbl_projetos_arquivados (codigo_projeto, nome)
+        SELECT codigo, nome FROM tbl_projetos WHERE codigo = codigo_projeto;
+
+    -- Deletar o projeto da tabela 'tbl_projetos'
+    CALL proc_delprojeto(codigo_projeto);
+END;
+
+
