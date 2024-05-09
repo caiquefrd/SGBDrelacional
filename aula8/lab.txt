@@ -56,12 +56,7 @@ SELECT p.nome, p.cor FROM tbl_peca p JOIN tbl_estoque e ON p.cod_peca = e.cod_pe
 
 --8 Encontre o nome das peças que estão disponíveis em estoque em Londres e não estão disponíveis em estoque em Paris:
 
-SELECT p.nome
-FROM tbl_peca p
-JOIN tbl_estoque e ON p.cod_peca = e.cod_peca
-JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_fornecedor
-WHERE f.cidade = 'LONDRES'
-AND p.cod_peca NOT IN (
+SELECT p.nome FROM tbl_peca p JOIN tbl_estoque e ON p.cod_peca = e.cod_peca JOIN tbl_fornecedor f ON e.cod_fornecedor = f.cod_fornecedor WHERE f.cidade = 'LONDRES' AND p.cod_peca NOT IN (
     SELECT e2.cod_peca
     FROM tbl_estoque e2
     JOIN tbl_fornecedor f2 ON e2.cod_fornecedor = f2.cod_fornecedor

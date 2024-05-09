@@ -86,7 +86,46 @@ bd_aula10=# select * from vw_empregados_salarial ;
 
 
 --5 criar uma view v_departemp para listar os departamentos e a quantidade de empregados em cada um
--- listar os departamentos e as quantidades por ordem decrescente de quantidade.
+-- listar os departamentos e as quantidades por orderm decrescente de quantidade.
+
+bd_aula10=# create or replace view v_departemp (departamento, empregados) as select d.nome, count(*) e from tbl_empregados e JOIN tbl_departamentos d ON e.cod_departamento = d.cod_departamento GROUP BY d.nome ORDER BY e DESC;
+CREATE VIEW
+bd_aula10=# select * from v_departemp ;
+  departamento   | empregados
+-----------------+------------
+ Departamento 20 |          8
+ Departamento 36 |          5
+ Departamento 10 |          5
+ Departamento 3  |          4
+ Departamento 15 |          2
+ Departamento 29 |          1
+ Departamento 1  |          1
+ Departamento 35 |          1
+ Departamento 19 |          1
+ Departamento 32 |          1
+ Departamento 9  |          1
+ Departamento 34 |          1
+ Departamento 7  |          1
+ Departamento 17 |          1
+ Departamento 18 |          1
+ Departamento 31 |          1
+ Departamento 8  |          1
+ Departamento 33 |          1
+ Departamento 30 |          1
+ Departamento 2  |          1
+ Departamento 28 |          1
+(21 registros)
 
 
 --6 criar uma view v_departrouble para listar os nomes dos departamentos que possuem mais projetos do que empregados.
+
+CREATE VIEW v_departrouble AS
+SELECT d.dept_nome
+FROM departamentos d
+JOIN (SELECT dept_id, COUNT(*) AS num_projetos
+      FROM projetos
+      GROUP BY dept_id) p ON d.dept_id = p.dept_id
+JOIN (SELECT dept_id, COUNT(*) AS num_empregados
+      FROM empregados
+      GROUP BY dept_id) e ON d.dept_id = e.dept_id
+WHERE p.num_projetos > e.num_empregados;
